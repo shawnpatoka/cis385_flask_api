@@ -8,8 +8,9 @@ api = Api(app)
 # dict of notes
 
 NOTES = {
-    'note1': {'note': 'This is some example note text.'},
-    'note2': {'note': 'This is even more example note text.'},
+    1: {'title': 'First Note Title', 'body':'This is some note one text. This is some note one text. ',},
+    2: {'title': 'Note Two Title', 'body':'Note Two Text. Note Two Text. Note Two Text. ',},
+    3: {'title': 'The Third Title', 'body':'Some placeholder text for Note 3.',},
 }
 
 
@@ -23,7 +24,8 @@ def abort_if_note_doesnt_exist(note_id):
 
 
 parser = reqparse.RequestParser()
-parser.add_argument('note')
+parser.add_argument('title')
+parser.add_argument('body')
 
 
 
@@ -35,37 +37,46 @@ class Notes(Resource):
 
     def post(self):
         args = parser.parse_args()
-        note_id = int(max(NOTES.keys()).lstrip('note')) + 1
-        note_id = 'note%i' % note_id
-        NOTES[note_id] = {'note': args['note']}
-        return NOTES[note_id], 201
+        new_note_id = len(NOTES) + 1
+        NOTES[new_note_id] = {'title': args['title'], 'body': args['body'], }
+        return NOTES[new_note_id], 201
    
 
 
-class Note(Resource):
-    def get(self, note_id):
-        abort_if_note_doesnt_exist(note_id)
-        return NOTES[note_id]
+class NoteByID(Resource):
+    def get(self, id):
+        abort_if_note_doesnt_exist(id)
+        return NOTES[id]
+        
+
+        
     
-    def put(self, note_id):
-        args = parser.parse_args()
-        note = {'note': args['note']}
-        NOTES[note_id] = note
-        return note, 201
+    # def put(self, note_id):
+    #     args = parser.parse_args()
+    #     note = {'note': args['note']}
+    #     NOTES[note_id] = note
+    #     return note, 201
 
-    def delete(self, note_id):
-        abort_if_note_doesnt_exist(note_id)
-        del NOTES[note_id]
-        return '', 204
+    # def delete(self, note_id):
+    #     abort_if_note_doesnt_exist(note_id)
+    #     del NOTES[note_id]
+    #     return '', 204
 
+class NoteByTitle(Resource):
+    def get(self, title):
+        for item in NOTES:
+            current_note = NOTES[item]
+            if current_note['title'] == title:
+                return current_note
 
 
 # routes
 
 api.add_resource(Notes, '/api/v1/notes')
-api.add_resource(Note, '/api/v1/notes/<note_id>')
+api.add_resource(NoteByID, '/api/v1/notes/<int:id>')
+api.add_resource(NoteByTitle, '/api/v1/notes/<string:title>')
 
 
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True)
