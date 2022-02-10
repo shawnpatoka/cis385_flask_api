@@ -5,8 +5,8 @@ Shawn Patoka
 **Assignment:**
 Created a simple REST API using Flask, and Flask-RESTful.
 
-**Files:**
-API File: notes_api.py<br>
+**Files:**<br>
+API File: notes_api.py<br><br>
 Screenshots: shawnpatoka_assignment3_screenshots.pdf (subitted via Canvas)
 
 <hr />
