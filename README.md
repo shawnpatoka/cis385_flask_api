@@ -7,13 +7,13 @@ Created a simple REST API using Flask, and Flask-RESTful.
 
 **Files:**<br>
 API File: notes_api.py<br>
-Screenshots: shawnpatoka_assignment3_screenshots.pdf
+Screenshots: shawnpatoka_assignment3_screenshots.pdf (subitted via Canvas)
 
 <hr />
 
 **Functionality:**
 
- **1. GET: /api/v1/notes** <br>
+**1. GET: /api/v1/notes** <br>
  Retrieve all notes<br><br>
 **2. GET: /api/v1/notes/< int: id >**<br>
 Retrieve note by ID<br><br>
